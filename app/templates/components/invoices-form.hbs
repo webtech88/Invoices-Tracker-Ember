@@ -17,19 +17,21 @@
         <table class="table table-striped table-condensed" cellspacing="0" cellpadding="0">
             <thead>
             <tr>
+                <th>Invoice ID</th>
                 <th>Invoice Number</th>
                 <th>Price</th>
                 <th class="actions">Actions</th>
             </tr>
             </thead>
             <tbody>
-              {{#each invoices as |invoice|}}
+              {{#each invoices as |invoice index|}}
                 <tr>
+                    <td>{{index}}</td>
                     <td>{{invoice.num}}</td>
                     <td>{{invoice.price}}</td>
                     <td class="actions">
                         <button type="button" class="btn btn-warning btn-xs">Edit</button>
-                        <button type="button" class="btn btn-danger btn-xs">Delete</button>
+                        <button {{action "deleteInvoice" index}} type="button" class="btn btn-danger btn-xs">Delete</button>
                     </td>
                 </tr>
               {{/each}}

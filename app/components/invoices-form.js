@@ -12,6 +12,9 @@ export default Component.extend({
             let invoiceNumber = this.get('invoiceNumber');
             let invoicePrice = this.get('invoicePrice');
             this.get('invoices').pushObject({num: invoiceNumber, price: invoicePrice})
+        },
+        deleteInvoice: function(index){
+            this.get('invoices').removeAt(index)
         }
     }
 });
