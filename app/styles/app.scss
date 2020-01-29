@@ -1,1 +1,36 @@
 @import "ember-cli-bootstrap-4/bootstrap";
+
+$theme-color: #0f9d58;
+
+.custom-styles-overlay {
+  background-color: rgba($theme-color, .77);
+}
+
+.custom-styles-overlay,
+.custom-styles-wrapper {
+  padding: 50px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  position: fixed;
+  z-index: 9999;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  -webkit-box-shadow: 0 8px 6px -6px black;
+  -moz-box-shadow: 0 8px 6px -6px black;
+  box-shadow: 0 8px 6px -6px black;
+}
+
+.custom-styles-modal-container {
+  background: #222;
+  color: white;
+  margin-left: -25px;
+  margin-top: 10px;
+  width: 300px;
+
+  h1 {
+    color: $theme-color;
+  }
+}

@@ -1,3 +1,28 @@
+{{#if isShowingModalDialog}}
+{{#modal-dialog
+    targetAttachment='none'
+    containerClass=customContainerClassNames
+    overlayClass='custom-styles-overlay'
+}}
+<form>
+    <div class="row">
+        <div class="col-4">
+            {{input value=(mut selectedInvoiceNum) class="form-control" placeholder="Number"}}
+        </div>
+        <div class="col-4">
+            {{input value=(mut selectedInvoicePrice)  class="form-control" placeholder="Price"}}
+        </div>
+        <div class="col-2">
+            <button {{action "updateInvoice"}} type="button" class="btn btn-primary">Update</button>
+        </div>
+        <div class="col-2">
+            <button onclick={{action (mut isShowingModalDialog) false}} class="btn btn-danger">Cancel</button>
+        </div>
+    </div>
+</form>
+
+{{/modal-dialog}}
+{{/if}}
 <form>
     <div class="row">
         <div class="col">
@@ -16,25 +41,27 @@
     <div class="table-responsive col-md-12">
         <table class="table table-striped table-condensed" cellspacing="0" cellpadding="0">
             <thead>
-            <tr>
-                <th>Invoice ID</th>
-                <th>Invoice Number</th>
-                <th>Price</th>
-                <th class="actions">Actions</th>
-            </tr>
+                <tr>
+                    <th>Invoice ID</th>
+                    <th>Invoice Number</th>
+                    <th>Price</th>
+                    <th class="actions">Actions</th>
+                </tr>
             </thead>
             <tbody>
-              {{#each invoices as |invoice index|}}
+                {{#each invoices as |invoice index|}}
                 <tr>
                     <td>{{index}}</td>
                     <td>{{invoice.num}}</td>
                     <td>{{invoice.price}}</td>
                     <td class="actions">
-                        <button type="button" class="btn btn-warning btn-xs">Edit</button>
-                        <button {{action "deleteInvoice" index}} type="button" class="btn btn-danger btn-xs">Delete</button>
+                        <button type="button" class="btn btn-warning btn-xs"
+                            {{action "openModalDialog" index}}>Edit</button>
+                        <button {{action "deleteInvoice" index}} type="button"
+                            class="btn btn-danger btn-xs">Delete</button>
                     </td>
                 </tr>
-              {{/each}}
+                {{/each}}
             </tbody>
         </table>
     </div>

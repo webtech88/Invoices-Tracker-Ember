@@ -1,6 +1,5 @@
-// import Controller from '@ember/controller';
-import Ember from 'ember';
-export default Ember.Controller.extend({
+import Controller from '@ember/controller';
+export default Controller.extend({
     invoices: [
         {num: '1', price: '1500'}, 
         {num: '2', price: '2000'}, 
@@ -14,6 +13,9 @@ export default Ember.Controller.extend({
         },
         deleteInvoice: function(index){
             this.get('invoices').splice(index, 1)
+        },
+        openModalDialog: function (index) {
+            console.log("controllers: ", index);
         }
     }
 });
