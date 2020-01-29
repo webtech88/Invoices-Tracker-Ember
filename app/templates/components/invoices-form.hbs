@@ -1,0 +1,39 @@
+<form>
+    <div class="row">
+        <div class="col">
+            {{input value=invoiceNumber class="form-control" placeholder="Number"}}
+        </div>
+        <div class="col">
+            {{input value=invoicePrice class="form-control" placeholder="Price"}}
+        </div>
+        <div class="col">
+            <button {{action "addInvoice"}} type="button" class="btn btn-primary">Create</button>
+        </div>
+    </div>
+</form>
+<br>
+<div id="list" class="row">
+    <div class="table-responsive col-md-12">
+        <table class="table table-striped table-condensed" cellspacing="0" cellpadding="0">
+            <thead>
+            <tr>
+                <th>Invoice Number</th>
+                <th>Price</th>
+                <th class="actions">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+              {{#each invoices as |invoice|}}
+                <tr>
+                    <td>{{invoice.num}}</td>
+                    <td>{{invoice.price}}</td>
+                    <td class="actions">
+                        <button type="button" class="btn btn-warning btn-xs">Edit</button>
+                        <button type="button" class="btn btn-danger btn-xs">Delete</button>
+                    </td>
+                </tr>
+              {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
