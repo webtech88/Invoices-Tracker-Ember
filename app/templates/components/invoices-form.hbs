@@ -1,4 +1,4 @@
-{{#if isShowingModalDialog}}
+{{#if isShowingUpdateModalDialog}}
 {{#modal-dialog
     targetAttachment='none'
     containerClass=customContainerClassNames
@@ -24,10 +24,29 @@
             <button {{action "updateInvoice"}} type="button" class="btn btn-primary">Update</button>
         </div>
         <div class="col-2">
-            <button onclick={{action (mut isShowingModalDialog) false}} class="btn btn-danger">Cancel</button>
+            <button onclick={{action (mut isShowingUpdateModalDialog) false}} class="btn btn-danger">Cancel</button>
         </div>
     </div>
 </form>
+
+{{/modal-dialog}}
+{{/if}}
+
+{{#if isShowingDeleteConfirmModalDialog}}
+{{#modal-dialog
+    targetAttachment='none'
+    containerClass=customContainerClassNames
+    overlayClass='custom-styles-overlay'
+}}
+<div>Are you sure to delete the invoice({{deletingInvoiceNumber}})?</div>
+<div class="row">
+    <div class="col-3">
+        <button {{action "confirmDelete"}} type="button" class="btn btn-danger">Yes</button>
+    </div>
+    <div class="col-3">
+        <button onclick={{action (mut isShowingDeleteConfirmModalDialog) false}} class="btn btn-primary">Cancel</button>
+    </div>
+</div>
 
 {{/modal-dialog}}
 {{/if}}
