@@ -26,7 +26,8 @@
 <form>
     <div class="row">
         <div class="col">
-            {{input value=invoiceNumber class="form-control" placeholder="Date"}}
+            {{!-- {{input value=invoiceNumber class="form-control" placeholder="Date"}} --}}
+            {{pikaday-input format="YYYY/MM/DD" class="form-control"}}
         </div>
         <div class="col">
             {{input value=invoiceAmount class="form-control" placeholder="Amount"}}
