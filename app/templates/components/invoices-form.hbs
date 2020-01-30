@@ -83,7 +83,7 @@
                 <tr>
                     <th {{action "sort" "dueDate"}} class="cursor-pointer">Due date</th>
                     <th {{action "sort" "num"}} class="cursor-pointer">Invoice Number</th>
-                    <th {{action "sort" "amount"}} class="cursor-pointer">Amount</th {{action "sort" "amoun"}}>
+                    <th class="cursor-pointer">Amount</th {{action "sort" "amoun"}}>
                     <th class="actions">Actions</th>
                 </tr>
             </thead>
@@ -103,5 +103,15 @@
                 {{/each}}
             </tbody>
         </table>
+    </div>
+</div>
+
+<br>
+<div class="row text-center">
+    <div class="col-6">
+        Total:
+    </div>
+    <div class="col-6">
+        {{totalAmount}}$
     </div>
 </div>

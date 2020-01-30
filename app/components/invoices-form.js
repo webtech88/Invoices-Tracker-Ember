@@ -36,6 +36,7 @@ export default Component.extend({
     deletingInvoiceIndex: -1,
     deletingInvoiceNumber: "",
     selectedCriteria: "",
+    totalAmount: 7500,
     invoices: [
         { dueDate: '2020/01/29', num: '27478399374', amount: '1500' },
         { dueDate: '2020/01/25', num: '29937474783', amount: '2500' },
@@ -50,6 +51,7 @@ export default Component.extend({
             if (!invoiceAmount || invoiceAmount == "") {
                 invoiceAmount = "0";
             }
+            this.set("totalAmount", parseInt(this.get("totalAmount")) + parseInt(invoiceAmount));
             let selectedDate = new Date(this.get("newDate"));
             let y = "0000" + selectedDate.getFullYear().toString();
             y = y.slice(y.length - 4, y.length);
@@ -71,6 +73,11 @@ export default Component.extend({
             d = d.slice(d.length - 2, d.length);
             currentInvoice = { dueDate: y + "/" + m + "/" + d, num: currentInvoice.num, amount: this.get("selectedInvoiceAmount") }
             this.get("invoices").replace(index, 1, [currentInvoice]);
+            let total = 0;
+            for (let i = 0; i < this.get("invoices").length; i++) {
+                total = total + parseInt(this.get("invoices").objectAt(i).amount)
+            }
+            this.set("totalAmount", total);
             this.set('isShowingUpdateModalDialog', false);
         },
         deleteInvoice: function (index) {
@@ -82,6 +89,11 @@ export default Component.extend({
         },
         confirmDelete: function () {
             this.get('invoices').removeAt(this.get("deletingInvoiceIndex"));
+            let total = 0;
+            for (let i = 0; i < this.get("invoices").length; i++) {
+                total = total + parseInt(this.get("invoices").objectAt(i).amount)
+            }
+            this.set("totalAmount", total);
             this.set("isShowingDeleteConfirmModalDialog", false);
         },
         openUpdateDialog(index) {
@@ -100,6 +112,8 @@ export default Component.extend({
             // this.set("newDate", new Date().toISOString().slice(0, 10));
         },
         sort: function (criteria) {
+            if (this.get("isShowingUpdateModalDialog") || this.get("isShowingDeleteConfirmModalDialog"))
+                return;
             if (this.get("selectedCriteria") == criteria) {
                 this.get("invoices").reverse();
                 let arrObj = Array.from(this.get("invoices"));
@@ -109,15 +123,27 @@ export default Component.extend({
             }
             else {
                 this.set("selectedCriteria", criteria)
-                if (this.get("isShowingUpdateModalDialog") || this.get("isShowingDeleteConfirmModalDialog"))
-                    return;
                 if (this.get("invoices").length == 0)
                     return;
+                // if (criteria == "dueDate") {
                 let arrObj = Array.from(this.get("invoices"));
                 arrObj = arrObj.sortBy(criteria);
                 for (let i = 0; i < arrObj.length; i++) {
                     this.get("invoices").replace(i, 1, [arrObj.objectAt(i)]);
                 }
+                // } else {
+                //     for (let i = 0; i < this.get("invoices").length; i++) {
+                //         let current_invoice = this.get("invoices").objectAt(i)
+                //         for (let j = i + 1; j < this.get("invoices").length; j++) {
+                //             let temp_invoice = this.get("invoices").objectAt(j)
+                //             if (parseInt(current_invoice.amount) < parseInt(temp_invoice.amount)) {
+                //                 console.log("exchange", i, current_invoice.amount, j, temp_invoice.amount)
+                //                 this.get("invoices").replace(i, 1, [temp_invoice]);
+                //                 this.get("invoices").replace(j, 1, [current_invoice]);
+                //             }
+                //         }
+                //     }
+                // }
             }
         }
     }
