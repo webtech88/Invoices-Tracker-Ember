@@ -47,6 +47,9 @@ export default Component.extend({
                 return;
             let invoiceNumber = (Math.floor(Math.random() * (99999999999 - 10000000000)) + 10000000000).toString() + "";
             let invoiceAmount = this.get('invoiceAmount');
+            if (!invoiceAmount || invoiceAmount == "") {
+                invoiceAmount = "0";
+            }
             let selectedDate = new Date(this.get("newDate"));
             let y = "0000" + selectedDate.getFullYear().toString();
             y = y.slice(y.length - 4, y.length);

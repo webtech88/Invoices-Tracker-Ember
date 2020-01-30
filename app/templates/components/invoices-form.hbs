@@ -18,7 +18,7 @@
                 readonly="readonly"}}
         </div>
         <div class="col-4">
-            {{input value=(mut selectedInvoiceAmount)  class="form-control" placeholder="Amount"}}
+            {{input type="number" min="0" value=(mut selectedInvoiceAmount)  class="form-control" placeholder="Amount"}}
         </div>
         <div class="col-2">
             <button {{action "updateInvoice"}} type="button" class="btn btn-primary">Update</button>
@@ -45,7 +45,8 @@
         <button {{action "confirmDelete"}} type="button" class="btn btn-danger w-50">Yes</button>
     </div>
     <div class="col-6">
-        <button onclick={{action (mut isShowingDeleteConfirmModalDialog) false}} class="btn btn-primary w-50">Cancel</button>
+        <button onclick={{action (mut isShowingDeleteConfirmModalDialog) false}}
+            class="btn btn-primary w-50">Cancel</button>
     </div>
 </div>
 
@@ -66,7 +67,8 @@
                 readonly="readonly"}}
         </div>
         <div class="col-sm-4">
-            {{input value=invoiceAmount class="form-control" placeholder="Amount"}}
+            {{input value=invoiceAmount type="number" min="0" id="quantity"
+            class="form-control" placeholder="Amount"}}
         </div>
         <div class="col-sm-4">
             <button {{action "addInvoice"}} type="button" class="btn btn-primary">Create</button>
