@@ -1,5 +1,30 @@
 import Component from '@ember/component';
-
+Array.prototype.sortBy = function () {
+    function _sortByAttr(attr) {
+        var sortOrder = 1;
+        if (attr[0] == "-") {
+            sortOrder = -1;
+            attr = attr.substr(1);
+        }
+        return function (a, b) {
+            var result = (a[attr] < b[attr]) ? -1 : (a[attr] > b[attr]) ? 1 : 0;
+            return result * sortOrder;
+        }
+    }
+    function _getSortFunc() {
+        if (arguments.length == 0) {
+            throw "Zero length arguments not allowed for Array.sortBy()";
+        }
+        var args = arguments;
+        return function (a, b) {
+            for (var result = 0, i = 0; result == 0 && i < args.length; i++) {
+                result = _sortByAttr(args[i])(a, b);
+            }
+            return result;
+        }
+    }
+    return this.sort(_getSortFunc.apply(null, arguments));
+}
 export default Component.extend({
     tagName: '',
     newDate: new Date().toISOString().slice(0, 10),
@@ -10,9 +35,10 @@ export default Component.extend({
     selectedInvoiceAmount: "",
     deletingInvoiceIndex: -1,
     deletingInvoiceNumber: "",
+    selectedCriteria: "",
     invoices: [
-        { dueDate: '2020/01/30', num: '27478399374', amount: '1500' },
-        { dueDate: '2020/01/30', num: '29937474783', amount: '2500' },
+        { dueDate: '2020/01/29', num: '27478399374', amount: '1500' },
+        { dueDate: '2020/01/25', num: '29937474783', amount: '2500' },
         { dueDate: '2020/01/30', num: '27783993474', amount: '3500' },
     ],
     actions: {
@@ -70,5 +96,26 @@ export default Component.extend({
         openDatePicker: function () {
             // this.set("newDate", new Date().toISOString().slice(0, 10));
         },
+        sort: function (criteria) {
+            if (this.get("selectedCriteria") == criteria) {
+                this.get("invoices").reverse();
+                let arrObj = Array.from(this.get("invoices"));
+                for (let i = 0; i < arrObj.length; i++) {
+                    this.get("invoices").replace(i, 1, [arrObj.objectAt(i)]);
+                }
+            }
+            else {
+                this.set("selectedCriteria", criteria)
+                if (this.get("isShowingUpdateModalDialog") || this.get("isShowingDeleteConfirmModalDialog"))
+                    return;
+                if (this.get("invoices").length == 0)
+                    return;
+                let arrObj = Array.from(this.get("invoices"));
+                arrObj = arrObj.sortBy(criteria);
+                for (let i = 0; i < arrObj.length; i++) {
+                    this.get("invoices").replace(i, 1, [arrObj.objectAt(i)]);
+                }
+            }
+        }
     }
 });

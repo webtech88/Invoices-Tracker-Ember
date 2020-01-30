@@ -78,9 +78,9 @@
         <table class="table table-striped table-condensed" cellspacing="0" cellpadding="0">
             <thead>
                 <tr>
-                    <th>Due date</th>
-                    <th>Invoice Number</th>
-                    <th>Amount</th>
+                    <th {{action "sort" "dueDate"}} class="cursor-pointer">Due date</th>
+                    <th {{action "sort" "num"}} class="cursor-pointer">Invoice Number</th>
+                    <th {{action "sort" "amount"}} class="cursor-pointer">Amount</th {{action "sort" "amoun"}}>
                     <th class="actions">Actions</th>
                 </tr>
             </thead>
